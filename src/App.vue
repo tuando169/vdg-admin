@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import LoginPage from '@/components/LoginPage.vue'
+
+
 </script>
 
 <template>
-  <LoginPage />
+  <RouterView />
 </template>
 
 <style>
@@ -11,5 +12,12 @@ import LoginPage from '@/components/LoginPage.vue'
 
 #app {
   font-family: 'MuseoModerno', sans-serif;
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
