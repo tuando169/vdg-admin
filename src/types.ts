@@ -1,17 +1,10 @@
-export type DoodleRequest = {
-  title: string,
-  image: File,
-  description: string,
-  category: string
-}
-
-export type DoodleResponse = {
+export type Doodle = {
   time: {
     end: null,
     event: string,
     dateString: string
   },
-  _id: string,
+  id: string,
   title: string,
   image: string,
   description: string,
@@ -27,9 +20,9 @@ export type DoodleResponse = {
 }
 
 export type Category = {
-  _id: "6634c04c7be1776408028f6f",
-  title: "Tháng 1",
-  createdAt: "2024-05-03T10:45:32.080Z",
-  updatedAt: "2024-05-03T10:45:32.080Z",
-  slug: "thang-1",
-}[]
+  id: string,
+  title: string,
+  createdAt: string,
+  updatedAt: string,
+  slug: string,
+}

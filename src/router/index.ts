@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
-import UserView from '@/components/UserView.vue'
+import UserView from '@/components/users/UserView.vue'
 import DoodleView from '@/components/doodles/DoodleView.vue'
 import ProfileView from '@/components/ProfileView.vue'
 import PerformanceView from '@/components/PerformanceView.vue'
@@ -8,7 +8,6 @@ import DashboardView from '@/components/DashboardView.vue'
 import LoginView from '@/components/LoginView.vue'
 import DoodleDetail from '@/components/doodles/DoodleDetail.vue'
 import DoodleCreate from '@/components/doodles/DoodleCreate.vue'
-import DoodleUpdate from '@/components/doodles/DoodleUpdate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

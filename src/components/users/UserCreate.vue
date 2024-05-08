@@ -1,6 +1,6 @@
 <template>
   <div class="w-[100vw] bg-[#eee] ">
-    <h1>Create doodle</h1>
+    <h1>Create user</h1>
     <div class="text-xl">
       <div>
         <span>Name: </span>
@@ -30,6 +30,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { notification } from 'ant-design-vue'
 import router from '@/router'
+import { apiEndpoint } from '@/apiEndpoint'
 
 const requestData = {}
 
@@ -45,7 +46,7 @@ async function submit() {
   formData.append('description', requestData.description)
   formData.append('category', requestData.category)
   await axios.post(
-    `https://google-doodle-v2-v2.vercel.app/api/v1/doodle/`,
+    apiEndpoint.user.create,
     formData)
     .then((response) => {
       notification['success']({
@@ -53,7 +54,7 @@ async function submit() {
         description:
           'Create successfully'
       })
-      router.push('/doodle')
+      router.push('/user')
     })
     .catch((error) => {
       notification['error']({

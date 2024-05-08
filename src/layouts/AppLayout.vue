@@ -1,6 +1,6 @@
 <template>
   <div class="w-[100vw] h-[100vh]">
-    <div class="flex flex-grow bg-[#FAF1F0] items-center shadow-xl z-10 absolute w-[100vw]">
+    <div class="flex flex-grow bg-[#FAF1F0] items-center shadow-xl z-10 fixed w-[100vw]">
       <div class="flex items-center ml-3">
         <img src="../../public/logo.png" alt="logo" class="w-[100px]">
         <span class="font-semibold text-2xl ml-4">VietDoodleGallery</span>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="flex flex-row h-full w-[100vw]">
-      <nav class="flex flex-col h-full w-[300px] bg-[#FAF1F0] shadow-xl pt-[100px]">
+      <nav class="flex flex-col h-full w-[300px] bg-[#FAF1F0] shadow-xl pt-[100px] fixed">
         <!--      dashboard-->
         <RouterLink to="/dashboard" class="hover:bg-[#f5dad7]">
           <div class="flex items-center py-6 px-8 ">
@@ -82,7 +82,7 @@
           </div>
         </RouterLink>
       </nav>
-      <RouterView class=" text-9xl mt-[102px]" />
+      <RouterView class=" text-9xl pt-[102px] pl-[300px]" />
     </div>
   </div>
 

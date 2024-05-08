@@ -7,22 +7,9 @@ import type { Category, Doodle } from '@/types'
 import router from '@/router'
 import { notification } from 'ant-design-vue'
 
-
-const route = useRoute()
-const id = route.params.id
-
 const isEdit = ref(false)
-
-const listCategory = ref([{
-  _id: '',
-  title: ''
-}])
-const value2 = ref(['a1', 'b2'])
-
-const options = ref<{ value: string }[]>()
-
 const data = ref({
-  category_id: [''],
+  category: '',
   description: '',
   event: '',
   image: '',
@@ -33,11 +20,17 @@ const data = ref({
   view: 0
 })
 
+const route = useRoute()
+const id = route.params.id
 
+const listCategory = ref([{
+  _id: '',
+  title: ''
+}])
 fetchData()
 
 async function fetchData() {
-  await axios.get(apiEndpoint.doodle.get_detail + id.toString())
+  await axios.get(`https://google-doodle-v2-v2.vercel.app/api/v1/doodle/detail/${id}`)
     .then((response) => {
       const raw_data: Doodle = response.data
       data.value.title = raw_data.title
@@ -48,8 +41,7 @@ async function fetchData() {
       data.value.status = raw_data.status
       data.value.description = raw_data.description
       data.value.image = raw_data.image
-      data.value.category_id = raw_data.doodle_category_id
-      console.log('cate', data.value.category_id)
+
       notification['success']({
         message: 'Get data successfully'
       })
@@ -61,18 +53,12 @@ async function fetchData() {
     })
 
   listCategory.value = []
-  await axios.get(apiEndpoint.category.get_all)
+  await axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/category')
     .then((response) => {
-      const raw_data: Category[] = response.data
-      raw_data.map((item: any) => listCategory.value?.push({ _id: item._id, title: item.title }))
+      const raw_data: Category = response.data
+      raw_data.map((item) => listCategory.value?.push({ _id: item._id, title: item.title }))
     })
-  options.value = listCategory.value.map((item) => {
-    return {
-      value: item._id
-    }
-  })
 }
-
 
 async function submit() {
   const formData = new FormData()
@@ -80,8 +66,10 @@ async function submit() {
   formData.append('image', data.value.image)
   formData.append('description', data.value.description)
 
-  // formData.append('category', data.value.category)
-  console.log('form', formData)
+  const foundCategory = listCategory.value.find(item => item.title === data.value.category)
+  const categoryId = foundCategory ? foundCategory._id : ''
+  formData.append('category', categoryId)
+  console.log(formData)
   await axios.patch(
     `https://google-doodle-v2-v2.vercel.app/api/v1/doodle/` + id,
     formData,
@@ -108,6 +96,9 @@ async function submit() {
     })
 }
 
+function handleCategoryChange() {
+  console.log(data.value.category)
+}
 </script>
 <template>
   <div class="w-[100vw] bg-[#eee] text-xl">
@@ -135,13 +126,14 @@ async function submit() {
         </div>
         <div>
           <span class="pr-3 pt-3">Category</span>
-          <a-select
-            v-model:value="data.category_id"
-            :options="options"
-            mode="multiple"
-            placeholder="Please select"
-            style="width: 200px"
-          ></a-select>
+          <select :disabled="!isEdit" v-model="data.category" @change="handleCategoryChange">
+            <option
+              v-for="cate in listCategory"
+              :key="cate._id"
+            >
+              {{ cate.title }}
+            </option>
+          </select>
         </div>
         <div>
           <span class="pr-3 pt-3">Status</span>
@@ -170,7 +162,7 @@ async function submit() {
     </div>
 
 
-    <button class="bg-amber-400 p-4" @click="isEdit = !isEdit">Edit</button>
+    <button class="bg-amber-400 p-4" @click="isEdit = true">Edit</button>
     <button class="bg-amber-400 p-4 ml-10" v-show="isEdit" @click="submit">Update</button>
   </div>
 

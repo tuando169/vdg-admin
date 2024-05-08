@@ -18,6 +18,16 @@
           <template v-else-if="column.dataIndex === 'action'">
             <span v-html="text" @click="handleDelete(record.id)"></span>
           </template>
+          <template v-else-if="column.dataIndex === 'category'">
+            <a-tag
+              v-for="cate in text"
+              :key="cate"
+              class="bg-blue-400 text-white px-2 py-1 rounded-full text-center mr-2"
+            >
+              {{ cate }}
+            </a-tag>
+
+          </template>
           <template v-else>
             {{ text }}
           </template>
@@ -35,6 +45,7 @@ import { apiEndpoint } from '@/apiEndpoint'
 import { ref } from 'vue'
 import router from '@/router'
 import { notification } from 'ant-design-vue'
+import type { Category, Doodle } from '@/types'
 
 const columns = [
   {
@@ -76,7 +87,7 @@ let tableData = ref([
     id: '',
     name: 'a',
     anniversary: 'a',
-    category: 'a',
+    category_id: 'a',
     view: 0,
     like: 0,
     status: 'published',
@@ -85,10 +96,13 @@ let tableData = ref([
   }
 ])
 
+const listCategory = ref<Category[]>([])
+
+getListCategory()
 fetchData()
 
-function handleDelete(id: any) {
-  axios.delete('https://google-doodle-v2-v2.vercel.app/api/v1/doodle/' + id).then(() => {
+async function handleDelete(id: any) {
+  await axios.delete('https://google-doodle-v2-v2.vercel.app/api/v1/doodle/' + id).then(() => {
     notification['success']({
       message: 'Delete successfully'
     })
@@ -102,19 +116,43 @@ function handleDelete(id: any) {
 
 }
 
-async function fetchData() {
-  tableData.value = []
-  axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/doodle')
+async function getListCategory() {
+  await axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/category')
     .then((response) => {
       const raw_data = response.data
-
+      console.log(raw_data)
       raw_data.map((item: any) => {
+        listCategory.value.push({
+            id: item._id,
+            title: item.title,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+            slug: item.slug
+          }
+        )
+      })
+    })
+    .catch((error) => {
+      notification['error']({
+        message: 'Failed to get category'
+      })
+    })
+}
 
+async function fetchData() {
+  tableData.value = []
+  await axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/doodle')
+    .then((response) => {
+      const raw_data: Doodle[] = response.data
+      raw_data.map((item: any) => {
+        const cateItemList = item.doodle_category_id.map((id: any) => {
+          return listCategory.value.find((value) => value.id == id)?.title
+        })
         tableData.value.push({
           id: item._id,
           name: item.title,
           anniversary: item.time.dateString,
-          category: item.category,
+          category_id: cateItemList,
           view: item.views,
           like: item.likes,
           status: (item.status == true) ? 'Published' : 'Draft',
@@ -125,7 +163,7 @@ async function fetchData() {
     })
     .catch((error) => {
       notification['error']({
-        message: 'Fail'
+        message: 'Fail to get doodle data'
       })
     })
 }

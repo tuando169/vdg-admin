@@ -2,15 +2,15 @@
   <div class="w-[100vw] bg-[#eee]">
     <div class="mt-4 ml-7">
       <p class="text-7xl font-bold">Dashboard</p>
-      <div class="flex mt-9 gap-6">
+      <div class="flex mt-9 ml-10 gap-6">
         <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9] w-1/3">
           <svg class=""
                xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
             <path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z" fill="black" />
           </svg>
           <div>
-            <p class="text-2xl">1020</p>
-            <p class="text-[16px]">New Downloads</p>
+            <p class="text-2xl">{{ totalViews }}</p>
+            <p class="text-[16px]">Total views</p>
           </div>
         </div>
         <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9] w-1/3">
@@ -23,42 +23,30 @@
               fill="currentColor" />
           </svg>
           <div>
-            <p class="text-2xl">1020</p>
-            <p class="text-[16px]">New Downloads</p>
+            <p class="text-2xl">{{ totalLikes }}</p>
+            <p class="text-[16px]">Total likes</p>
           </div>
         </div>
-        <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9] w-1/3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
-            <path
-              d="M11 6.914V2.586L6.293 7.293l-3.774 3.774l3.841 3.201L11 18.135V13.9c8.146-.614 11 4.1 11 4.1c0-2.937-.242-5.985-2.551-8.293C16.765 7.022 12.878 6.832 11 6.914z"
-              fill="currentColor" />
-          </svg>
-          <div>
-            <p class="text-2xl">1020</p>
-            <p class="text-[16px]">New Downloads</p>
-          </div>
-        </div>
+
       </div>
-      <div class="flex h-1/2 mt-5 gap-10 justify-center">
+      <div class="flex mt-5 gap-10 ml-10">
 
-        <div class="bg-white p-5 shadow-2xl rounded-3xl border-2 border-blue-300">
-          <Doughnut :data="data1" :options="options1" />
-
+        <div class="bg-white py-5 px-20 shadow-2xl rounded-3xl border-2 border-blue-300">
+          <Line :data="chartData" :options="chartOptions" class="w-[800px]" />
         </div>
-        <div class="bg-white py-5 px-20 shadow-2xl rounded-3xl border-2 border-blue-300 w-1/2">
-          <Bar :data="data2" :options="options2" />
-        </div>
-      </div>
-
-      <div class="w-[90%]">
-        <a-table :columns="columns" :data-source="data" bordered>
-          <template #bodyCell="{ column, text }">
-            <template v-if="column.dataIndex === 'name'">
-              <a>{{ text }}</a>
+        <div class="w-1/4 rounded-3xl bg-white p-5">
+          <p class="text-3xl text-center pb-5">Hot Doodles</p>
+          <a-table :columns="columns" :data-source="data"  class="">
+            <template #bodyCell="{ column, text }">
+              <template v-if="column.dataIndex === 'name'">
+                <a>{{ text }}</a>
+              </template>
             </template>
-          </template>
-        </a-table>
+          </a-table>
+        </div>
+
       </div>
+
     </div>
   </div>
 </template>
@@ -66,99 +54,185 @@
 <script setup lang="ts">
 import {
   Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
   CategoryScale,
   LinearScale,
-  ArcElement
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 } from 'chart.js'
-import { Doughnut, Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
+import axios from 'axios'
+import { notification } from 'ant-design-vue'
 
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
-const data1 = {
-  labels: ['Likes', 'Saves', 'Downloads'],
-  datasets: [
-    {
-      backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
-      data: [40, 20, 80]
-    }
-  ]
-}
+const renderViewsData: number[] = [100, 200, 300, 250, 270, 350, 400, 500, 600, 700, 800, 900]
+const renderLikesData: number[] = [12, 12, 45, 67, 89, 90, 100, 120, 130, 140, 150, 160]
 
-const options1 = {
-  responsive: true,
-  maintainAspectRatio: false
-}
+const totalViews = renderViewsData.reduce((cur, total) => cur + total, 0)
+const totalLikes = renderLikesData.reduce((cur, total) => cur + total, 0)
 
-const data2 = {
+const chartData = {
   labels: [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    'T1',
+    'T2',
+    'T3',
+    'T4',
+    'T5',
+    'T6',
+    'T7',
+    'T8',
+    'T9',
+    'T10',
+    'T11',
+    'T12'
   ],
   datasets: [
     {
-      label: 'Data One',
+      label: 'Views',
       backgroundColor: '#f87979',
-      data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+      borderColor: '#f87979',
+      data: renderViewsData
+    },
+    {
+      label: 'Likes',
+      backgroundColor: '#7f79f8',
+      borderColor: '#7f79f8',
+      data: renderLikesData
     }
   ]
 }
 
-const options2 = {
+const chartOptions: { [key: string]: any } = {
+  scales: {
+    x: {
+      display: true,
+      grid: {
+        display: false // Disable X-axis grid lines ("net")
+      },
+      ticks: {
+        display: true,
+        font: {
+          size: 16, // Change this to the size you want
+          family: 'Roboto' // Change this to the font family you want
+        }
+      }
+    },
+    y: {
+      display: true,
+      grid: {
+        display: false // Disable Y-axis grid lines ("net")
+      },
+      ticks: {
+        display: true,
+        font: {
+          size: 16, // Change this to the size you want
+          family: 'Roboto' // Change this to the font family you want
+        }
+      },
+      beginAtZero: true
+    }
+  },
+  elements: {
+    line: {
+      borderWidth: 2
+    }
+  },
   responsive: true,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  interaction: {
+    mode: 'nearest'
+  },
+  tension: 0.3,
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      enabled: true,
+      mode: 'nearest',
+      intersect: false
+    }
+  }
 }
 
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
+    dataIndex: 'name'
   },
   {
-    title: 'Cash Assets',
-    className: 'column-money',
-    dataIndex: 'money',
+    title: 'Views',
+    dataIndex: 'views'
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-];
+    title: 'Likes',
+    dataIndex: 'likes'
+  }
+]
 
 const data = [
   {
     key: '1',
     name: 'John Brown',
-    money: '￥300,000.00',
-    address: 'New York No. 1 Lake Park',
+    views: 123,
+    likes: 34
   },
   {
     key: '2',
     name: 'Jim Green',
-    money: '￥1,256,000.00',
-    address: 'London No. 1 Lake Park',
+    views: 234,
+    likes: 45
   },
   {
     key: '3',
     name: 'Joe Black',
-    money: '￥120,000.00',
-    address: 'Sidney No. 1 Lake Park',
+    views: 345,
+    likes: 56
   },
-];
+  {
+    key: '4',
+    name: 'Jim Red',
+    views: 456,
+    likes: 67
+  },
+  {
+    key: '5',
+    name: 'Jim Red',
+    views: 456,
+    likes: 67
+  },
+  {
+    key: '5',
+    name: 'Jim Red',
+    views: 456,
+    likes: 67
+  }
+]
 
+async function fetchData() {
+  axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/doodle')
+    .then((response) => {
+      const raw_data = response.data
+
+
+        .catch(() => {
+          notification['error']({
+            message: 'Fail'
+          })
+        })
+    })
+}
 </script>
 <style scoped>
 @import url('https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css');
