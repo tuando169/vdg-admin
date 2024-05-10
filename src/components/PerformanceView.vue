@@ -47,7 +47,7 @@ async function fetchDoodleList() {
       raw_data.map((item) => {
         listLog.value?.push(
           {
-            id: item._id,
+            id: item.id,
             title: item.title,
             updatedAt: item.updatedAt.slice(0, 10)
           }

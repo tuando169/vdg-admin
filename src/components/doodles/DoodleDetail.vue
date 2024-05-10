@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 import type { Category, Doodle } from '@/types'
 import router from '@/router'
 import { notification } from 'ant-design-vue'
+import { ElNotification } from 'element-plus'
 
 
 const route = useRoute()
@@ -13,16 +14,18 @@ const id = route.params.id
 
 const isEdit = ref(false)
 
-const listCategory = ref([{
-  _id: '',
-  title: ''
-}])
-const value2 = ref(['a1', 'b2'])
-
-const options = ref<{ value: string }[]>()
+const listCategory = ref<{
+  id: string
+  title: string,
+}[]>([])
 
 const data = ref({
-  category_id: [''],
+  category: [
+    {
+      _id: '',
+      title: ''
+    }
+  ],
   description: '',
   event: '',
   image: '',
@@ -36,7 +39,28 @@ const data = ref({
 
 fetchData()
 
+async function fetchListCategory() {
+  listCategory.value = []
+  await axios.get(apiEndpoint.category.get_all)
+    .then((response) => {
+      const raw_data = response.data
+      raw_data.map((item: any) => {
+        listCategory.value.push({
+          id: item._id,
+          title: item.title
+        })
+      })
+      console.log(listCategory.value)
+    })
+    .catch((error) => {
+      notification['error']({
+        message: 'Failed to get category'
+      })
+    })
+}
+
 async function fetchData() {
+  await fetchListCategory()
   await axios.get(apiEndpoint.doodle.get_detail + id.toString())
     .then((response) => {
       const raw_data: Doodle = response.data
@@ -48,39 +72,29 @@ async function fetchData() {
       data.value.status = raw_data.status
       data.value.description = raw_data.description
       data.value.image = raw_data.image
-      data.value.category_id = raw_data.doodle_category_id
-      console.log('cate', data.value.category_id)
-      notification['success']({
-        message: 'Get data successfully'
+
+      ElNotification({
+        title: 'Success',
+        message: 'Get data successfully',
+        type: 'success'
       })
     })
     .catch((error) => {
-      notification['error']({
-        message: 'Failed to get data'
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to get data',
+        type: 'error'
       })
     })
-
-  listCategory.value = []
-  await axios.get(apiEndpoint.category.get_all)
-    .then((response) => {
-      const raw_data: Category[] = response.data
-      raw_data.map((item: any) => listCategory.value?.push({ _id: item._id, title: item.title }))
-    })
-  options.value = listCategory.value.map((item) => {
-    return {
-      value: item._id
-    }
-  })
 }
-
 
 async function submit() {
   const formData = new FormData()
   formData.append('title', data.value.title)
   formData.append('image', data.value.image)
   formData.append('description', data.value.description)
+  formData.append('status', data.value.status)
 
-  // formData.append('category', data.value.category)
   console.log('form', formData)
   await axios.patch(
     `https://google-doodle-v2-v2.vercel.app/api/v1/doodle/` + id,
@@ -136,7 +150,7 @@ async function submit() {
         <div>
           <span class="pr-3 pt-3">Category</span>
           <a-select
-            v-model:value="data.category_id"
+            v-model:value="data.category"
             :options="options"
             mode="multiple"
             placeholder="Please select"

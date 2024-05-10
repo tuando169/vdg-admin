@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100vw] h-[100vh]">
+  <div class="w-full h-full">
     <div class="flex flex-grow bg-[#FAF1F0] items-center shadow-xl z-10 fixed w-[100vw]">
       <div class="flex items-center ml-3">
         <img src="../../public/logo.png" alt="logo" class="w-[100px]">
@@ -22,15 +22,16 @@
           <p class="text-[20px]  font-semibold">Admin</p>
           <p class="text-[18px]  font-semibold text-[#787486]">Viet Nam</p>
         </div>
-        <RouterLink to="/profile" class="hover:rounded-full hover:bg-[#f5dad7]" active-class="profile-active">
-          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
-        </RouterLink>
+<!--          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover"-->
+                <RouterLink to="/profile" class="hover:rounded-full hover:bg-[#f5dad7]" active-class="profile-active">
+                  <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
+                </RouterLink>
       </div>
 
       <!--    SIDEBAR-->
     </div>
 
-    <div class="flex flex-row h-full w-[100vw]">
+    <div class="flex flex-row h-full w-full text-2xl">
       <nav class="flex flex-col h-full w-[300px] bg-[#FAF1F0] shadow-xl pt-[100px] fixed">
         <!--      dashboard-->
         <RouterLink to="/dashboard" class="hover:bg-[#f5dad7]">
@@ -82,7 +83,7 @@
           </div>
         </RouterLink>
       </nav>
-      <RouterView class=" text-9xl pt-[102px] pl-[300px]" />
+      <RouterView class=" text-9xl mt-[96px] ml-[300px] w-full" />
     </div>
   </div>
 

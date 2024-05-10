@@ -13,13 +13,14 @@
 
 #app {
   font-family: 'Niramit', sans-serif;
-  font-size: 24px;
+  font-size: 16px;
   margin: 0;
   padding: 0;
   position: absolute;
   box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #eee;
 }
 
 </style>

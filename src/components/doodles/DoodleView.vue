@@ -1,41 +1,50 @@
 <template>
-  <div class="w-[100vw] bg-[#eee] text-3xl">
-    <h1 class="text-3xl ml-10 mt-10">Doodle</h1>
-    <div class="flex flex-col ">
-      <div class="flex pt-[25px]">
-        <div class="ml-auto mr-10">
-          <button class="h-10 w-[99px] bg-[#036EFF] text-[white] text-[15px] rounded-[10px] border-[none]">
-            <RouterLink to="doodle/create">Create</RouterLink>
-          </button>
-        </div>
+  <div class="">
+    <div class="flex flex-col mt-5 mx-10">
+      <div class="flex items-center">
+        <span class="text-3xl font-bold">Doodle Manager</span>
+        <button class="bg-green-500 w-28 py-1 text-[white] text-xl rounded-[10px] my-5 mr-4 ml-auto">
+          <RouterLink to="doodle/create">Create</RouterLink>
+        </button>
       </div>
       <!-- table -->
-      <a-table :columns="columns" :data-source="tableData" bordered>
-        <template #bodyCell="{ column, text, record }">
-          <template v-if="column.dataIndex === 'name'">
-            <RouterLink :to="`/doodle/detail/${record.id}`">{{ text }}</RouterLink>
-          </template>
-          <template v-else-if="column.dataIndex === 'action'">
-            <span v-html="text" @click="handleDelete(record.id)"></span>
-          </template>
-          <template v-else-if="column.dataIndex === 'category'">
-            <a-tag
-              v-for="cate in text"
-              :key="cate"
-              class="bg-blue-400 text-white px-2 py-1 rounded-full text-center mr-2"
-            >
-              {{ cate }}
-            </a-tag>
+      <div class="flex justify-center">
 
-          </template>
-          <template v-else>
-            {{ text }}
-          </template>
-        </template>
+        <a-table :columns="columns" :data-source="tableData" size="small" bordered class=" w-full z-0">
+          <template #bodyCell="{ column, text, record }">
+            <template v-if="column.dataIndex === 'name'">
+              <RouterLink :to="`/doodle/detail/${record.id}`" class="text-lg font-[niramit]">{{ text }}</RouterLink>
+            </template>
+            <template v-else-if="column.dataIndex === 'image'">
+              <div class="flex justify-center">
+                <RouterLink :to="`/doodle/detail/${record.id}`" class="text-lg font-[niramit]">
 
-      </a-table>
+                  <img :src="`${text}`" alt="" class="max-h-[100px]">
+                </RouterLink>
+              </div>
+            </template>
+            <template v-else-if="column.dataIndex === 'action'">
+              <span v-html="text" @click="handleDelete(record.id)"></span>
+            </template>
+            <template v-else-if="column.dataIndex === 'category'">
+            <span>
+              <a-tag v-for="tag in text" :key="tag" color="blue"
+                     class="min-w-min mt-1 text-sm font-[niramit]">{{ tag.title }}</a-tag>
+            </span>
+
+            </template>
+            <template v-else>
+            <span>
+              {{ text }}
+            </span>
+            </template>
+          </template>
+
+        </a-table>
+      </div>
     </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -49,45 +58,70 @@ import type { Category, Doodle } from '@/types'
 
 const columns = [
   {
+    title: 'Image',
+    dataIndex: 'image',
+    width: 150,
+    align: 'center'
+  },
+  {
     title: 'Name',
-    dataIndex: 'name'
+    dataIndex: 'name',
+    width: 400
+
   },
   {
     title: 'Anniversary',
-    dataIndex: 'anniversary'
+    dataIndex: 'anniversary',
+    width: 150,
+    align: 'center'
   },
   {
     title: 'Category',
-    dataIndex: 'category'
+    dataIndex: 'category',
+    width: 200
   },
   {
     title: 'View',
-    dataIndex: 'view'
+    dataIndex: 'view',
+    width: 100,
+    align: 'center'
   },
   {
     title: 'Like',
-    dataIndex: 'like'
+    dataIndex: 'like',
+    width: 100,
+    align: 'center'
   },
   {
     title: 'Status',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    width: 100,
+    align: 'center'
   },
   {
     title: 'Format',
-    dataIndex: 'format'
+    dataIndex: 'format',
+    width: 100,
+    align: 'center'
   },
   {
     title: 'Action',
-    dataIndex: 'action'
+    dataIndex: 'action',
+    width: 100,
+    align: 'center'
   }
 ]
 
 let tableData = ref([
   {
     id: '',
+    image: '',
     name: 'a',
     anniversary: 'a',
-    category_id: 'a',
+    category: {
+      id: 1,
+      title: 'a'
+    },
     view: 0,
     like: 0,
     status: 'published',
@@ -120,7 +154,6 @@ async function getListCategory() {
   await axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/category')
     .then((response) => {
       const raw_data = response.data
-      console.log(raw_data)
       raw_data.map((item: any) => {
         listCategory.value.push({
             id: item._id,
@@ -146,18 +179,23 @@ async function fetchData() {
       const raw_data: Doodle[] = response.data
       raw_data.map((item: any) => {
         const cateItemList = item.doodle_category_id.map((id: any) => {
-          return listCategory.value.find((value) => value.id == id)?.title
+          const cate = listCategory.value.find((value) => value.id == id)
+          return {
+            id: cate?.id,
+            title: cate?.title
+          }
         })
         tableData.value.push({
           id: item._id,
+          image: item.image,
           name: item.title,
           anniversary: item.time.dateString,
-          category_id: cateItemList,
+          category: cateItemList,
           view: item.views,
           like: item.likes,
           status: (item.status == true) ? 'Published' : 'Draft',
           format: item.format,
-          action: `<button class="rounded-md bg-blue-300 p-1">Delete</button>`
+          action: `<button class="rounded-md bg-red-500 text-white py-1 px-3 text-xl font-[niramit]">Delete</button>`
         })
       })
     })
@@ -172,5 +210,7 @@ async function fetchData() {
 
 
 <style scoped>
-
+a-table {
+  max-width: 100%;
+}
 </style>
