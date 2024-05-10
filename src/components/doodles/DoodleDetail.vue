@@ -93,7 +93,7 @@ async function submit() {
   formData.append('title', data.value.title)
   formData.append('image', data.value.image)
   formData.append('description', data.value.description)
-  formData.append('status', data.value.status)
+  // formData.append('status', data.value.status)
 
   console.log('form', formData)
   await axios.patch(
@@ -149,13 +149,13 @@ async function submit() {
         </div>
         <div>
           <span class="pr-3 pt-3">Category</span>
-          <a-select
-            v-model:value="data.category"
-            :options="options"
-            mode="multiple"
-            placeholder="Please select"
-            style="width: 200px"
-          ></a-select>
+<!--          <a-select-->
+<!--            v-model:value="data.category"-->
+<!--            :options="options"-->
+<!--            mode="multiple"-->
+<!--            placeholder="Please select"-->
+<!--            style="width: 200px"-->
+<!--          ></a-select>-->
         </div>
         <div>
           <span class="pr-3 pt-3">Status</span>
