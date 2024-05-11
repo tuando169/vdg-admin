@@ -3,7 +3,7 @@
     <div class="flex flex-grow bg-[#FAF1F0] items-center shadow-xl z-10 fixed w-[100vw]">
       <div class="flex items-center ml-3">
         <img src="../../public/logo.png" alt="logo" class="w-[100px]">
-        <span class="font-semibold text-2xl ml-4">VietDoodleGallery</span>
+        <span class="font-semibold text-2xl ml-4">VietDoodle Gallery</span>
       </div>
       <div class="flex ml-auto mr-8 my-5 gap-5 ">
         <svg class=""
@@ -19,71 +19,63 @@
             stroke="#0A3B83" stroke-width="1.5" stroke-miterlimit="10" />
         </svg>
         <div class="text-right">
-          <p class="text-[20px]  font-semibold">Admin</p>
-          <p class="text-[18px]  font-semibold text-[#787486]">Viet Nam</p>
+          <p class="text-[20px] font-semibold">Admin</p>
+          <p class="text-[18px] font-semibold text-[#787486]">Viet Nam</p>
         </div>
-<!--          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover"-->
-                <RouterLink to="/profile" class="hover:rounded-full hover:bg-[#f5dad7]" active-class="profile-active">
-                  <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
-                </RouterLink>
+        <!--          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover"-->
+        <RouterLink to="/profile" class="hover:rounded-full hover:bg-[#f5dad7]" active-class="profile-active">
+          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
+        </RouterLink>
       </div>
 
       <!--    SIDEBAR-->
     </div>
 
-    <div class="flex flex-row h-full w-full text-2xl">
-      <nav class="flex flex-col h-full w-[300px] bg-[#FAF1F0] shadow-xl pt-[100px] fixed">
-        <!--      dashboard-->
+    <div class="flex flex-row h-full w-full text-xl">
+      <nav class="flex flex-col h-full w-[250px] bg-[#FAF1F0] shadow-xl pt-[100px] fixed">
         <RouterLink to="/dashboard" class="hover:bg-[#f5dad7]">
           <div class="flex items-center py-6 px-8 ">
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
               <path
-                d="M17.9617 0.769808C19.7162 0.660152 21.4463 1.26935 22.75 2.46337C23.944 3.76705 24.5532 5.49716 24.4557 7.26382V18.6436C24.5654 20.4102 23.944 22.1404 22.7622 23.444C21.4585 24.6381 19.7162 25.2473 17.9617 25.1376H6.58181C4.81513 25.2473 3.085 24.6381 1.78131 23.444C0.587283 22.1404 -0.0219162 20.4102 0.0877398 18.6436V7.26382C-0.0219162 5.49716 0.587283 3.76705 1.78131 2.46337C3.085 1.26935 4.81513 0.660152 6.58181 0.769808H17.9617ZM17.6449 6.33785C16.8895 5.58245 15.6711 5.58245 14.9157 6.33785L14.0993 7.16635C13.9775 7.28819 13.9775 7.49532 14.0993 7.61716C14.0993 7.61716 14.1232 7.64092 14.1658 7.68324L14.4655 7.98129C14.6389 8.15377 14.8552 8.36917 15.0725 8.58578L15.8093 9.3222C15.963 9.47663 16.065 9.58012 16.0731 9.59095C16.2072 9.73715 16.2925 9.9321 16.2925 10.1514C16.2925 10.59 15.9391 10.9555 15.4883 10.9555C15.2812 10.9555 15.0862 10.8703 14.9522 10.7362L12.9175 8.71371C12.82 8.61624 12.6494 8.61624 12.552 8.71371L6.7402 14.5254C6.33813 14.9275 6.10663 15.4636 6.09445 16.0362L6.02134 18.9238C6.02134 19.0822 6.07008 19.2284 6.17974 19.3381C6.28939 19.4477 6.4356 19.5086 6.59399 19.5086H9.45723C10.0421 19.5086 10.6025 19.2771 11.029 18.8629L19.2288 10.6388C19.972 9.88336 19.972 8.66497 19.2288 7.92175L17.6449 6.33785Z"
-                fill="black" />
+                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm200-80v-240H200v240h200Zm80 0h280v-240H480v240ZM200-520h560v-240H200v240Z" />
             </svg>
             <span class="pl-4 font-medium text-[black]">Dashboard</span>
           </div>
 
         </RouterLink>
-
-        <RouterLink to="/performance" class="hover:bg-[#f5dad7]">
-          <div class="flex items-center py-6 px-8 ">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-              <path
-                d="M12.296 0.300415C19.2236 0.300415 24.4681 5.98031 24.4681 12.4786C24.4681 20.0151 18.3211 24.6934 12.2716 24.6934C10.2714 24.6934 8.05165 24.156 6.27096 23.1055C5.64893 22.7268 5.12449 22.4459 4.45368 22.6658L1.98998 23.3986C1.36796 23.5941 0.806924 23.1055 0.989872 22.4459L1.80704 19.7098C1.9412 19.3311 1.91681 18.928 1.72166 18.6104C0.672763 16.6805 0.0751343 14.5673 0.0751343 12.5152C0.0751343 6.09024 5.20986 0.300415 12.296 0.300415ZM17.8698 10.964C17.0039 10.964 16.3087 11.6602 16.3087 12.5275C16.3087 13.3825 17.0039 14.0909 17.8698 14.0909C18.7358 14.0909 19.431 13.3825 19.431 12.5275C19.431 11.6602 18.7358 10.964 17.8698 10.964ZM12.2472 10.964C11.3935 10.9517 10.6861 11.6602 10.6861 12.5152C10.6861 13.3825 11.3813 14.0787 12.2472 14.0909C13.1132 14.0909 13.8084 13.3825 13.8084 12.5275C13.8084 11.6602 13.1132 10.964 12.2472 10.964ZM6.62465 10.964C5.7587 10.964 5.0635 11.6602 5.0635 12.5275C5.0635 13.3825 5.7709 14.0909 6.62465 14.0909C7.49061 14.0787 8.18581 13.3825 8.18581 12.5275C8.18581 11.6602 7.49061 10.964 6.62465 10.964Z"
-                fill="black" />
-            </svg>
-            <span class="pl-4 font-medium text-[black]">Performance</span>
-
-          </div>
-        </RouterLink>
-
         <RouterLink to="/doodle" class="hover:bg-[#f5dad7] ">
           <div class="flex items-center py-6 px-8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
               <path
-                d="M17.5574 0.386841C21.6911 0.386841 24.4681 3.28731 24.4681 7.60317V17.5635C24.4681 21.8794 21.6911 24.7798 17.5562 24.7798H6.98589C2.85215 24.7798 0.0751343 21.8794 0.0751343 17.5635V7.60317C0.0751343 3.28731 2.85215 0.386841 6.98589 0.386841H17.5574ZM18.9024 13.2542C17.595 12.4386 16.5856 13.584 16.3133 13.9503C16.0509 14.3039 15.8252 14.6941 15.5873 15.0843C15.0059 16.0472 14.34 17.1573 13.1871 17.803C11.5118 18.7307 10.2399 17.876 9.32501 17.2543C8.98161 17.0227 8.64801 16.8037 8.31564 16.6577C7.49637 16.304 6.75928 16.7067 5.66528 18.0963C5.0913 18.8226 4.52223 19.5425 3.9458 20.26C3.60116 20.6892 3.68334 21.3512 4.14816 21.6382C4.89016 22.0951 5.79529 22.3405 6.81815 22.3405H17.097C17.6771 22.3405 18.2585 22.2612 18.8128 22.08C20.0614 21.6722 21.0523 20.7383 21.5699 19.5048C22.0065 18.4676 22.2187 17.2089 21.8103 16.1617C21.6742 15.8143 21.4706 15.4909 21.1848 15.2064C20.4354 14.4625 19.7351 13.7677 18.9024 13.2542ZM8.00147 5.26544C6.32 5.26544 4.95373 6.63356 4.95373 8.31457C4.95373 9.99557 6.32 11.3637 8.00147 11.3637C9.68171 11.3637 11.0492 9.99557 11.0492 8.31457C11.0492 6.63356 9.68171 5.26544 8.00147 5.26544Z"
-                fill="black" />
+                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z" />
             </svg>
             <span class="pl-4 font-medium text-[black]">Doodle</span>
           </div>
         </RouterLink>
 
+        <RouterLink to="/category" class="hover:bg-[#f5dad7]">
+          <div class="flex items-center py-6 px-8 ">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
+              <path
+                d="m260-520 220-360 220 360H260ZM700-80q-75 0-127.5-52.5T520-260q0-75 52.5-127.5T700-440q75 0 127.5 52.5T880-260q0 75-52.5 127.5T700-80Zm-580-20v-320h320v320H120Zm580-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-500-20h160v-160H200v160Zm202-420h156l-78-126-78 126Zm78 0ZM360-340Zm340 80Z" />
+            </svg>
+            <span class="pl-4 font-medium text-[black]">Category</span>
+
+          </div>
+        </RouterLink>
+
         <RouterLink to="/user" class="hover:bg-[#f5dad7] ">
           <div class="flex items-center py-6 px-8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
               <path
-                d="M19.9895 19.9914C20.5467 19.8744 20.8788 19.2917 20.6047 18.7926C19.9895 17.6724 19.0165 16.688 17.7701 15.9387C16.1721 14.9778 14.2142 14.457 12.2 14.457C10.1858 14.457 8.22781 14.9778 6.62981 15.9386C5.3835 16.688 4.41046 17.6724 3.79522 18.7926C3.52114 19.2917 3.85327 19.8744 4.41047 19.9914C9.54747 21.0699 14.8525 21.0699 19.9895 19.9914Z"
-                fill="black" />
-              <ellipse cx="12.2" cy="8.31149" rx="5.08333" ry="5.1213" fill="black" />
+                d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
             </svg>
             <span class="pl-4 font-medium text-[black]">User</span>
           </div>
         </RouterLink>
       </nav>
-      <RouterView class=" text-9xl mt-[96px] ml-[300px] w-full" />
+      <RouterView class=" text-9xl mt-[96px] ml-[250px] w-full" />
     </div>
   </div>
 

@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router'
 import type { Category, Doodle } from '@/types'
 import router from '@/router'
 import { notification } from 'ant-design-vue'
-import { ElNotification } from 'element-plus'
+import { ElNotification, ElSelect } from 'element-plus'
 
 
 const route = useRoute()
@@ -19,21 +19,30 @@ const listCategory = ref<{
   title: string,
 }[]>([])
 
-const data = ref({
-  category: [
-    {
-      _id: '',
-      title: ''
-    }
-  ],
+const data = ref<{
+  category_id: string[],
+  description: string,
+  event: string,
+  image: string,
+  like: number,
+  title: string,
+  status: boolean,
+  uploadDate: string,
+  view: number,
+  format: string,
+  information: string
+}>({
+  category_id: [''],
   description: '',
   event: '',
   image: '',
   like: 0,
-  title: '',
   status: false,
+  title: '',
   uploadDate: '',
-  view: 0
+  view: 0,
+  format: 'png',
+  information: ''
 })
 
 
@@ -64,6 +73,7 @@ async function fetchData() {
   await axios.get(apiEndpoint.doodle.get_detail + id.toString())
     .then((response) => {
       const raw_data: Doodle = response.data
+      console.log(raw_data)
       data.value.title = raw_data.title
       data.value.event = raw_data.time.dateString
       data.value.uploadDate = raw_data.createdAt.slice(0, 10)
@@ -72,6 +82,9 @@ async function fetchData() {
       data.value.status = raw_data.status
       data.value.description = raw_data.description
       data.value.image = raw_data.image
+      data.value.category_id = raw_data.doodle_category_id
+      data.value.format = raw_data.format
+      data.value.information = raw_data.information
 
       ElNotification({
         title: 'Success',
@@ -89,13 +102,18 @@ async function fetchData() {
 }
 
 async function submit() {
+
   const formData = new FormData()
   formData.append('title', data.value.title)
   formData.append('image', data.value.image)
   formData.append('description', data.value.description)
-  // formData.append('status', data.value.status)
+  formData.append('status', data.value.status.toString())
+  data.value.category_id.map((item)=> {
+    formData.append('doodle_category_id', item)
+  })
+  formData.append('format', data.value.format)
+  formData.append('information', data.value.information)
 
-  console.log('form', formData)
   await axios.patch(
     `https://google-doodle-v2-v2.vercel.app/api/v1/doodle/` + id,
     formData,
@@ -117,11 +135,14 @@ async function submit() {
       notification['error']({
         message: 'Failure',
         description:
-          'Failed to create'
+          'Failed to update'
       })
     })
 }
 
+function handleCategoryChange() {
+  console.log(data.value.category_id)
+}
 </script>
 <template>
   <div class="w-[100vw] bg-[#eee] text-xl">
@@ -139,23 +160,31 @@ async function submit() {
           <span class="pr-3 pt-3">Name</span>
           <input :disabled="!isEdit" type="text" v-model="data.title" />
         </div>
+
         <div>
           <span class="pr-3 pt-3">Event</span>
           <input :disabled="!isEdit" type="text" v-model="data.event" />
         </div>
         <div>
           <span class="pr-3 pt-3">Upload Date</span>
-          <input :disabled="!isEdit" type="date" v-model="data.uploadDate" />
+          <input :disabled="true" type="date" v-model="data.uploadDate" />
         </div>
         <div>
           <span class="pr-3 pt-3">Category</span>
-<!--          <a-select-->
-<!--            v-model:value="data.category"-->
-<!--            :options="options"-->
-<!--            mode="multiple"-->
-<!--            placeholder="Please select"-->
-<!--            style="width: 200px"-->
-<!--          ></a-select>-->
+          <el-select
+            :disabled="!isEdit"
+            multiple
+            v-model="data.category_id"
+            @change="handleCategoryChange"
+          >
+            <el-option
+              v-for="item in listCategory"
+              :key="item.id"
+
+              :label="item.title"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </div>
         <div>
           <span class="pr-3 pt-3">Status</span>
@@ -166,25 +195,30 @@ async function submit() {
         </div>
         <div>
           <span class="pr-3 pt-3">Likes</span>
-          <input :disabled="!isEdit" type="number" v-model="data.like" />
+          <input :disabled="true" type="number" v-model="data.like" />
         </div>
         <div>
           <span class="pr-3 pt-3">Views</span>
-          <input :disabled="!isEdit" type="number" v-model="data.view" />
+          <input :disabled="true" type="number" v-model="data.view" />
         </div>
-
+        <div>
+          <span class="pr-3 pt-3">Format</span>
+          <input :disabled="!isEdit" type="text" v-model="data.format" />
+        </div>
+        <div>
+          <span class="pr-3 pt-3">Information</span>
+          <input :disabled="!isEdit" type="text" v-model="data.information" />
+        </div>
 
       </div>
     </div>
-
-    <!-- Description  -->
     <div>
       <span class="pr-3 pt-3">Description</span>
-      <input :disabled="!isEdit" type="text" v-model="data.description">
+      <textarea :disabled="!isEdit" v-model="data.description" class="w-[500px] h-20"></textarea>
     </div>
 
 
-    <button class="bg-amber-400 p-4" @click="isEdit = !isEdit">Edit</button>
+    <button class="bg-amber-400 p-4" @click="isEdit = true">Edit</button>
     <button class="bg-amber-400 p-4 ml-10" v-show="isEdit" @click="submit">Update</button>
   </div>
 
