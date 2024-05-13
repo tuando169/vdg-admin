@@ -6,7 +6,9 @@ export const apiEndpoint = {
     delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/delete/',
     create: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/',
     newest: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/newest',
-    report: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/report',
+    total_likes: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/total-like',
+    total_views: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/total-view',
+    total_doodles: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/total-doodle',
   },
   category: {
     get_all: 'https://google-doodle-v2-v2.vercel.app/api/v1/category',

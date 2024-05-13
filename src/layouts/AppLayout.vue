@@ -83,8 +83,8 @@
 import router from '@/router'
 
 if (!localStorage.getItem('token')) localStorage.setItem('token', 'none')
-
-if (localStorage.getItem('token') != 'admin') router.push('/login')
+const token = localStorage.getItem('token')
+if (token != 'admin' && token != 'guest') router.push('/login')
 </script>
 
 <style scoped>

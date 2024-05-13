@@ -1,8 +1,9 @@
 export const ADMIN = {
   username: 'admin',
-  password: 'admin'
+  password: 'admin',
 }
 
+export const has_permission = localStorage.getItem('token') == 'admin'
 export const eventConsts = {
   reload: 'reload'
 }
@@ -12,3 +13,4 @@ export const API_HEADER = {
     'Content-Type': 'multipart/form-data'
   }
 }
+

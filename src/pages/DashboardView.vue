@@ -1,30 +1,34 @@
 <template>
-  <div class="w-[100vw] bg-[#eee]">
-    <div class="mt-4 ml-7">
-      <p class="text-7xl font-bold">Dashboard</p>
-      <div class="flex mt-9 ml-10 gap-6">
+  <div class="">
+    <div class="pt-10 pl-16">
+      <p class="text-5xl font-bold">Dashboard</p>
+      <div class="flex pt-9 gap-6 w-[92.5%]">
         <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9] w-1/3">
-          <svg class=""
-               xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
-            <path d="M19 9h-4V3H9v6H5l7 8zM4 19h16v2H4z" fill="black" />
-          </svg>
+          <el-icon :size="40">
+            <View />
+          </el-icon>
           <div>
-            <p class="text-2xl">{{ totalViews }}</p>
+            <p class="text-3xl">{{ totalViews }}</p>
             <p class="text-[16px]">Total views</p>
           </div>
         </div>
-        <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9] w-1/3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24">
+        <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9]  w-1/3">
+          <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#5f6368">
             <path
-              d="M9.5 12c2.206 0 4-1.794 4-4s-1.794-4-4-4s-4 1.794-4 4s1.794 4 4 4zm1.5 1H8c-3.309 0-6 2.691-6 6v1h15v-1c0-3.309-2.691-6-6-6z"
-              fill="currentColor" />
-            <path
-              d="M16.604 11.048a5.67 5.67 0 0 0 .751-3.44c-.179-1.784-1.175-3.361-2.803-4.44l-1.105 1.666c1.119.742 1.8 1.799 1.918 2.974a3.693 3.693 0 0 1-1.072 2.986l-1.192 1.192l1.618.475C18.951 13.701 19 17.957 19 18h2c0-1.789-.956-5.285-4.396-6.952z"
-              fill="currentColor" />
+              d="m480-120.67-46.67-42q-104.18-95.08-172.25-164.04Q193-395.67 152.67-450.17q-40.34-54.5-56.5-99.16Q80-594 80-640q0-91.44 61.33-152.72 61.34-61.28 152-61.28 55.34 0 103.34 25.33 48 25.34 83.33 72.67 39.33-49.33 86.33-73.67 47-24.33 100.34-24.33 90.66 0 152 61.28Q880-731.44 880-640q0 46-16.17 90.67-16.16 44.66-56.5 99.16-40.33 54.5-108.41 123.46-68.07 68.96-172.25 164.04l-46.67 42Zm0-88.66q99.49-90.67 163.75-155.5Q708-429.67 745.67-478.17q37.66-48.5 52.66-86.42t15-75.31q0-64.1-41.33-105.77-41.33-41.66-105.18-41.66-50.02 0-92.59 29.83-42.56 29.83-65.56 81.5h-58q-22.34-51-64.9-81.17-42.57-30.16-92.59-30.16-63.85 0-105.18 41.66-41.33 41.67-41.33 105.88 0 37.46 15 75.62 15 38.17 52.66 87Q252-428.33 316.67-363.83q64.66 64.5 163.33 154.5Zm0-289Z" />
           </svg>
           <div>
-            <p class="text-2xl">{{ totalLikes }}</p>
+            <p class="text-3xl">{{ totalLikes }}</p>
             <p class="text-[16px]">Total likes</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-6 p-6 rounded-[20px] bg-[#f9f9f9]  w-1/3">
+          <el-icon :size="40">
+            <PictureFilled />
+          </el-icon>
+          <div>
+            <p class="text-3xl">{{ totalDoodles }}</p>
+            <p class="text-[16px]">Total doodles</p>
           </div>
         </div>
 
@@ -36,13 +40,7 @@
         </div>
         <div class="w-1/4 rounded-3xl bg-white p-5">
           <p class="text-3xl text-center pb-5">Hot Doodles</p>
-          <a-table :columns="columns" :data-source="data" class="">
-            <template #bodyCell="{ column, text }">
-              <template v-if="column.dataIndex === 'name'">
-                <a>{{ text }}</a>
-              </template>
-            </template>
-          </a-table>
+
         </div>
 
       </div>
@@ -65,6 +63,9 @@ import {
 import { Line } from 'vue-chartjs'
 import axios from 'axios'
 import { ElNotification } from 'element-plus'
+import { View, PictureFilled } from '@element-plus/icons-vue'
+import { computed, ref } from 'vue'
+import { apiEndpoint } from '@/apiEndpoint'
 
 ChartJS.register(
   CategoryScale,
@@ -76,6 +77,7 @@ ChartJS.register(
   Legend
 )
 
+const totalDoodles = ref(32)
 const renderViewsData: number[] = [100, 200, 300, 250, 270, 350, 400, 500, 600, 700, 800, 900]
 const renderLikesData: number[] = [12, 12, 45, 67, 89, 90, 100, 120, 130, 140, 150, 160]
 

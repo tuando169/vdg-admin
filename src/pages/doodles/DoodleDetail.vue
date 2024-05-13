@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router'
 import type { Doodle } from '@/types'
 import router from '@/router'
 import { ElNotification, ElSelect } from 'element-plus'
+import { has_permission } from '@/globalData'
 
 
 const route = useRoute()
@@ -182,9 +183,11 @@ function handleFileChange(e: any) {
             >
               Edit
             </button>
-            <button v-show="isEdit"
-                    class="bg-blue-500 hover:bg-blue-400 text-white text-2xl font-bold py-2 px-4 ml-4 rounded-lg transition duration-300"
-                    @click="submit">Update
+            <button
+              v-show="isEdit"
+              :disabled="!has_permission"
+              class="bg-blue-500 hover:bg-blue-400 text-white text-2xl font-bold py-2 px-4 ml-4 rounded-lg transition duration-300"
+              @click="submit">Update
             </button>
           </div>
         </div>
