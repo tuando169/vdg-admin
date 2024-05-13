@@ -72,6 +72,15 @@
             <span class="pl-4 font-medium text-[black]">User</span>
           </div>
         </RouterLink>
+
+        <div class="flex items-center py-6 px-8 hover:cursor-pointer hover:bg-[#f5dad7]" @click="logout">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368">
+            <path
+              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+          </svg>
+          <span class="pl-4 font-medium text-[black]">Logout</span>
+        </div>
+
       </nav>
       <RouterView class=" text-9xl mt-[96px] ml-[250px] w-full" />
     </div>
@@ -85,7 +94,13 @@ import router from '@/router'
 if (!localStorage.getItem('token')) localStorage.setItem('token', 'none')
 const token = localStorage.getItem('token')
 if (token != 'admin' && token != 'guest') router.push('/login')
+
+function logout() {
+  router.push('/login')
+  localStorage.setItem('token', 'none')
+}
 </script>
+
 
 <style scoped>
 .active {

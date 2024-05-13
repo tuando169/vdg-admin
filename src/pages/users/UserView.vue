@@ -105,7 +105,7 @@ function showDeleteDialog(id: any) {
         >
           <el-table-column type="index" label="No." width="50" align="center" class="text-2xl" />
 
-          <el-table-column property="fullName" label="Full Name" width="300" header-align="center" sortable>
+          <el-table-column property="fullName" label="Full Name" width="300" align="center" sortable>
             <template #default="scope">
               <span class="text-xl ">{{ scope.row.fullName }}</span>
 
