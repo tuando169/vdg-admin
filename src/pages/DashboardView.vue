@@ -212,8 +212,6 @@ const chartOptions: { [key: string]: any } = {
 
 
 onMounted(() => {
-  chartData.datasets[0].data = renderViewsData.value
-  chartData.datasets[1].data = renderLikesData.value
   fetchData()
 })
 

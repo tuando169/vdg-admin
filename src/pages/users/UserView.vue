@@ -63,7 +63,8 @@ async function fetchData() {
           fullName: item.fullName,
           email: item.email,
           favorite: item.favorite,
-          deleted: item.deleted
+          deleted: item.deleted,
+          doodleCreated: item.doodleCreated || []
         })
       })
       ElNotification({

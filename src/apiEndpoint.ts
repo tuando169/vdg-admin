@@ -15,6 +15,7 @@ export const apiEndpoint = {
     get_detail: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/detail/',
     edit: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/',
     create: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/',
+    delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/',
   },
   user: {
     get_all: 'https://google-doodle-v2-v2.vercel.app/api/v1/user',

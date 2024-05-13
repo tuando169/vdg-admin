@@ -71,7 +71,6 @@ const filterOptions = ref([
     ]
   }
 ])
-
 let tableData = ref<{
   id: string,
   image: string,
@@ -86,7 +85,7 @@ let tableData = ref<{
   status: string,
   format: string,
   updatedAt: string
-}[]>()
+}[]>([])
 
 const listCategory = ref<Category[]>([])
 
@@ -163,7 +162,7 @@ async function fetchData() {
             title: cate?.title
           }
         })
-        tableData.value.push({
+        tableData.value?.push({
           id: item._id,
           image: item.image,
           title: item.title,
@@ -186,15 +185,15 @@ async function fetchData() {
       if (sortSelection.value) {
         if (sortSelection.value[0] == 'title') {
           if (sortSelection.value[1] == 'ascending') {
-            tableData.value.sort((a, b) => a.title.localeCompare(b.title))
+            tableData.value?.sort((a, b) => a.title.localeCompare(b.title))
           } else {
-            tableData.value.sort((a, b) => b.title.localeCompare(a.title))
+            tableData.value?.sort((a, b) => b.title.localeCompare(a.title))
           }
         } else if (sortSelection.value[0] == 'time') {
           if (sortSelection.value[1] == 'latest') {
-            tableData.value.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+            tableData.value?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
           } else {
-            tableData.value.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime())
+            tableData.value?.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime())
           }
         }
       }
@@ -207,7 +206,7 @@ async function fetchData() {
           tableData.value = []
           categoryFilter.map((filter: any) => {
             const [type, value] = filter
-            tableData.value.push(...temp.filter(item => {
+            tableData.value?.push(...temp.filter(item => {
               for (let cat of item.category) {
                 if (cat.id == value) {
                   return true
@@ -223,7 +222,7 @@ async function fetchData() {
           tableData.value = []
           formatFilter.map((filter: any) => {
               const [type, value] = filter
-              tableData.value.push(...temp.filter((item) => item.format == value))
+              tableData.value?.push(...temp.filter((item) => item.format == value))
             }
           )
         }

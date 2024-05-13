@@ -224,7 +224,6 @@ function handleFileChange(e: any) {
           <div class="mb-4">
             <label class="block font-medium mb-2">Category</label>
             <el-select :disabled="!isEdit" size="large" multiple v-model="data.category_id"
-                       @change="handleCategoryChange"
                        :class="{ 'border-2 border-blue-500': isEdit }"
                        class="w-full rounded-lg">
               <el-option v-for="item in listCategory" :key="item.id" :label="item.title" :value="item.id"></el-option>

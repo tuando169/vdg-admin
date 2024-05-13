@@ -165,7 +165,9 @@ async function submit() {
   formData.append('title', requestData.value.title)
   formData.append('image', requestData.value.image)
   formData.append('description', requestData.value.description)
-  formData.append('doodle_category_id', requestData.value.doodle_category_id)
+  requestData.value.doodle_category_id.forEach((item) => {
+    formData.append('doodle_category_id', item);
+  });
   formData.append('format', requestData.value.format)
   formData.append('time[dateString]', requestData.value.time.dateString)
   formData.append('information', requestData.value.information)
