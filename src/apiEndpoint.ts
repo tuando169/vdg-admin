@@ -6,17 +6,18 @@ export const apiEndpoint = {
     delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/delete/',
     create: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/',
     newest: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/newest',
+    report: 'https://google-doodle-v2-v2.vercel.app/api/v1/doodle/report',
   },
   category: {
     get_all: 'https://google-doodle-v2-v2.vercel.app/api/v1/category',
     get_detail: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/detail/',
-    edit: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/edit/',
-    delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/delete/',
-    create: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/'
+    edit: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/',
+    create: 'https://google-doodle-v2-v2.vercel.app/api/v1/category/',
   },
   user: {
     get_all: 'https://google-doodle-v2-v2.vercel.app/api/v1/user',
     get_detail: 'https://google-doodle-v2-v2.vercel.app/api/v1/user/detail/',
-    delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/user/delete/',
+    delete: 'https://google-doodle-v2-v2.vercel.app/api/v1/user/',
+    edit: 'https://google-doodle-v2-v2.vercel.app/api/v1/user/',
   }
 }

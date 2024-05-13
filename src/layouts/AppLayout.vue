@@ -22,10 +22,8 @@
           <p class="text-[20px] font-semibold">Admin</p>
           <p class="text-[18px] font-semibold text-[#787486]">Viet Nam</p>
         </div>
-        <!--          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover"-->
-        <RouterLink to="/profile" class="hover:rounded-full hover:bg-[#f5dad7]" active-class="profile-active">
-          <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
-        </RouterLink>
+        <img src="../../public/avatar.jpg" alt="avatar" class="size-[56px] rounded-full object-cover">
+
       </div>
 
       <!--    SIDEBAR-->

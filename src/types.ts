@@ -26,3 +26,12 @@ export type Category = {
   updatedAt: string,
   slug: string,
 }
+
+export type User = {
+  id: string,
+  fullName: string,
+  email: string,
+  favorite: string[],
+  doodleCreated: string[],
+  deleted: boolean,
+}

@@ -28,7 +28,7 @@ import { ref } from 'vue'
 import { apiEndpoint } from '@/apiEndpoint'
 import axios from 'axios'
 import type { Doodle } from '@/types'
-import { notification } from 'ant-design-vue'
+import { ElNotification } from 'element-plus'
 
 const listLog = ref<{
   id: string,
@@ -54,9 +54,14 @@ async function fetchDoodleList() {
         )
       })
     })
-    .catch(() => notification['error']({
-      message: 'Failed to get log'
-    }))
+    .catch((error) => {
+      console.log(error)
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to fetch doodle data',
+        type: 'error'
+      })
+    })
   console.log(listLog.value)
 }
 </script>

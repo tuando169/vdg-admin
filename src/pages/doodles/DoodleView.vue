@@ -2,10 +2,13 @@
 
 import axios from 'axios'
 import { apiEndpoint } from '@/apiEndpoint'
-import { computed, ref } from 'vue'
-import { notification } from 'ant-design-vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 import type { Category, Doodle } from '@/types'
 import { Filter } from '@element-plus/icons-vue'
+import { ElNotification } from 'element-plus'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const sortOptions = [
   {
@@ -93,21 +96,26 @@ const dialogVisible = ref(false)
 const currentDoodleId = ref('')
 const sortSelection = ref()
 const filterSelections = ref()
+
 fetchData()
 
 async function handleDelete(id: any) {
-
   await axios.delete(apiEndpoint.doodle.delete + id)
     .then((response) => {
-      notification['success']({
-        message: 'Delete successfully'
+      ElNotification({
+        title: 'Success',
+        message: 'Delete successfully',
+        type: 'success'
       })
       dialogVisible.value = false
       fetchData()
     })
     .catch((error) => {
-      notification['error']({
-        message: 'Failed to delete'
+      console.log(error)
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to delete doodle',
+        type: 'error'
       })
     })
 }
@@ -134,8 +142,11 @@ async function getListCategory() {
 
     })
     .catch((error) => {
-      notification['error']({
-        message: 'Failed to get category'
+      console.log(error)
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to fetch category data',
+        type: 'error'
       })
     })
 }
@@ -168,8 +179,12 @@ async function fetchData() {
         })
       })
 
+      const categoryId = localStorage.getItem('category_id')
+      if (categoryId) {
+        filterSelections.value = [['category', categoryId]]
+        localStorage.removeItem('category_id')
+      }
       // SORT
-      console.log('filter', filterSelections.value)
       if (sortSelection.value) {
         if (sortSelection.value[0] == 'title') {
           if (sortSelection.value[1] == 'ascending') {
@@ -179,22 +194,22 @@ async function fetchData() {
           }
         } else if (sortSelection.value[0] == 'time') {
           if (sortSelection.value[1] == 'latest') {
-            tableData.value.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            tableData.value.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
           } else {
-            tableData.value.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt))
+            tableData.value.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime())
           }
         }
       }
       // FILTER
-
-      if (filterSelections.value.length > 0) {
-        const categoryFilter = filterSelections.value.filter((filter) => filter[0] == 'category')
-        const formatFilter = filterSelections.value.filter((filter) => filter[0] == 'format')
+      console.log('filter', filterSelections.value)
+      if (filterSelections.value) {
+        const categoryFilter = filterSelections.value.filter((filter: any) => filter[0] == 'category')
+        const formatFilter = filterSelections.value.filter((filter: any) => filter[0] == 'format')
         let temp = tableData.value.slice()
         console.log('temp', temp)
         if (categoryFilter.length > 0) {
           tableData.value = []
-          categoryFilter.map((filter) => {
+          categoryFilter.map((filter: any) => {
             const [type, value] = filter
             tableData.value.push(...temp.filter(item => {
               for (let cat of item.category) {
@@ -211,7 +226,7 @@ async function fetchData() {
         if (formatFilter.length > 0) {
           temp = tableData.value
           tableData.value = []
-          formatFilter.map((filter) => {
+          formatFilter.map((filter: any) => {
               const [type, value] = filter
               tableData.value.push(...temp.filter((item) => item.format == value))
             }
@@ -219,8 +234,11 @@ async function fetchData() {
         }
       }
     }).catch((error) => {
-      notification['error']({
-        message: 'Failed to get doodles'
+      console.log(error)
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to fetch doodle data',
+        type: 'error'
       })
     })
 }

@@ -1,16 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AppLayout from '@/layouts/AppLayout.vue'
-import UserView from '@/components/users/UserView.vue'
-import DoodleView from '@/components/doodles/DoodleView.vue'
-import ProfileView from '@/components/ProfileView.vue'
-import PerformanceView from '@/components/PerformanceView.vue'
-import DashboardView from '@/components/DashboardView.vue'
-import LoginView from '@/components/LoginView.vue'
-import DoodleDetail from '@/components/doodles/DoodleDetail.vue'
-import DoodleCreate from '@/components/doodles/DoodleCreate.vue'
-import CategoryView from '@/components/categories/CategoryView.vue'
-import CategoryDetail from '@/components/categories/CategoryDetail.vue'
-import CategoryCreate from '@/components/categories/CategoryCreate.vue'
+import DashboardView from '@/pages/DashboardView.vue'
+import PerformanceView from '@/pages/PerformanceView.vue'
+import ProfileView from '@/pages/ProfileView.vue'
+import DoodleView from '@/pages/doodles/DoodleView.vue'
+import DoodleDetail from '@/pages/doodles/DoodleDetail.vue'
+import DoodleCreate from '@/pages/doodles/DoodleCreate.vue'
+import UserView from '@/pages/users/UserView.vue'
+import CategoryView from '@/pages/categories/CategoryView.vue'
+import LoginView from '@/pages/LoginView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +41,7 @@ const router = createRouter({
           children: [
             {
               path: '',
+              name: 'doodle-view',
               component: DoodleView
             },
             {
@@ -55,25 +55,15 @@ const router = createRouter({
           ]
         },
         {
+          path: '/category',
+          name: 'category',
+          component : CategoryView
+        },
+        {
           path: '/user',
           name: 'user',
           component: UserView
         },
-        {
-          path: '/category',
-          name: 'category',
-          component: CategoryView,
-          children: [
-            {
-              path: 'detail/:id',
-              component: CategoryDetail,
-            },
-            {
-              path: 'create',
-              component: CategoryCreate
-            }
-          ]
-        }
       ]
     },
     {

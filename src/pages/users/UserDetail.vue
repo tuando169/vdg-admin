@@ -5,7 +5,6 @@
 <!--import { useRoute } from 'vue-router'-->
 <!--import type { Category, Doodle } from '@/types'-->
 <!--import router from '@/router'-->
-<!--import { notification } from 'ant-design-vue'-->
 
 <!--const isEdit = ref(false)-->
 <!--const data = ref({-->
@@ -171,6 +170,5 @@
 
 
 <!--<style scoped>-->
-<!--@import url("https://cdnjs.cloudflare.com/ajax/libs/ionicons/7.2.1/esm/ionicons.min.js");-->
 
 <!--</style>-->

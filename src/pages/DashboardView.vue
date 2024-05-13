@@ -36,7 +36,7 @@
         </div>
         <div class="w-1/4 rounded-3xl bg-white p-5">
           <p class="text-3xl text-center pb-5">Hot Doodles</p>
-          <a-table :columns="columns" :data-source="data"  class="">
+          <a-table :columns="columns" :data-source="data" class="">
             <template #bodyCell="{ column, text }">
               <template v-if="column.dataIndex === 'name'">
                 <a>{{ text }}</a>
@@ -64,7 +64,7 @@ import {
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import axios from 'axios'
-import { notification } from 'ant-design-vue'
+import { ElNotification } from 'element-plus'
 
 ChartJS.register(
   CategoryScale,
@@ -225,12 +225,14 @@ async function fetchData() {
     .then((response) => {
       const raw_data = response.data
 
-
-        .catch(() => {
-          notification['error']({
-            message: 'Fail'
-          })
-        })
+    })
+    .catch((error) => {
+      console.log(error)
+      ElNotification({
+        title: 'Error',
+        message: 'Failed to fetch doodle data',
+        type: 'error'
+      })
     })
 }
 </script>
