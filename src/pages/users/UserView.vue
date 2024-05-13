@@ -51,6 +51,7 @@ async function handleDeleteStatus(id: any, deleted: boolean) {
     })
 }
 
+
 async function fetchData() {
   tableData.value = []
   await axios.get(apiEndpoint.user.get_all)

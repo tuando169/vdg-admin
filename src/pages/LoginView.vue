@@ -35,6 +35,12 @@ import { ref } from 'vue'
 import { ElNotification } from 'element-plus'
 const username = ref()
 const password = ref()
+
+document.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    submit()
+  }
+})
 function submit() {
   if (username.value == ADMIN.username && password.value == ADMIN.password) {
     permissionConsts.has_permission = true

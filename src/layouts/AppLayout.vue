@@ -6,18 +6,6 @@
         <span class="font-semibold text-2xl ml-4">VietDoodle Gallery</span>
       </div>
       <div class="flex ml-auto mr-8 my-5 gap-5 ">
-        <svg class=""
-             xmlns="http://www.w3.org/2000/svg" width="41" height="35" viewBox="0 0 41 35" fill="none">
-          <path
-            d="M20.5342 4.24377C14.8796 4.24377 10.2842 8.16669 10.2842 12.9938V17.2084C10.2842 18.0979 9.84003 19.4542 9.31044 20.2125L7.34586 22.9979C6.13294 24.7188 6.97003 26.6292 9.19086 27.2709C16.5538 29.3709 24.4975 29.3709 31.8604 27.2709C33.9275 26.6875 34.8329 24.6021 33.7054 22.9979L31.7409 20.2125C31.2284 19.4542 30.7842 18.0979 30.7842 17.2084V12.9938C30.7842 8.18127 26.1717 4.24377 20.5342 4.24377Z"
-            stroke="#0A3B83" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
-          <path
-            d="M23.6946 4.66672C23.165 4.53547 22.6184 4.43339 22.0546 4.37506C20.4146 4.20006 18.8429 4.30214 17.3738 4.66672C17.8692 3.58756 19.0992 2.82922 20.5342 2.82922C21.9692 2.82922 23.1992 3.58756 23.6946 4.66672Z"
-            stroke="#0A3B83" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path
-            d="M25.6592 27.7958C25.6592 30.202 23.3529 32.1708 20.5342 32.1708C19.1333 32.1708 17.835 31.6749 16.9125 30.8874C15.99 30.0999 15.4092 28.9916 15.4092 27.7958"
-            stroke="#0A3B83" stroke-width="1.5" stroke-miterlimit="10" />
-        </svg>
         <div class="text-right">
           <p class="text-[20px] font-semibold">Admin</p>
           <p class="text-[18px] font-semibold text-[#787486]">Viet Nam</p>

@@ -4,7 +4,6 @@ import axios from 'axios'
 import { apiEndpoint } from '@/apiEndpoint'
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import type { Category, Doodle } from '@/types'
-import { Filter } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { useRoute } from 'vue-router'
 import { permissionConsts } from '@/globalData'
@@ -73,23 +72,21 @@ const filterOptions = ref([
   }
 ])
 
-let tableData = ref([
-  {
-    id: '',
-    image: '',
-    title: 'a',
-    anniversary: 'a',
-    category: [{
-      id: '1',
-      title: 'a'
-    }],
-    views: 0,
-    likes: 0,
-    status: 'published',
-    format: 'png',
-    updatedAt: '2024-05-11T05:56:48.779Z'
-  }
-])
+let tableData = ref<{
+  id: string,
+  image: string,
+  title: string,
+  anniversary: string,
+  category: {
+    id: string,
+    title: string
+  }[],
+  views: number,
+  likes: number,
+  status: string,
+  format: string,
+  updatedAt: string
+}[]>()
 
 const listCategory = ref<Category[]>([])
 
@@ -202,12 +199,10 @@ async function fetchData() {
         }
       }
       // FILTER
-      console.log('filter', filterSelections.value)
       if (filterSelections.value) {
         const categoryFilter = filterSelections.value.filter((filter: any) => filter[0] == 'category')
         const formatFilter = filterSelections.value.filter((filter: any) => filter[0] == 'format')
         let temp = tableData.value.slice()
-        console.log('temp', temp)
         if (categoryFilter.length > 0) {
           tableData.value = []
           categoryFilter.map((filter: any) => {
@@ -223,7 +218,6 @@ async function fetchData() {
           })
         }
 
-        console.log('table', tableData.value)
         if (formatFilter.length > 0) {
           temp = tableData.value
           tableData.value = []
@@ -283,6 +277,8 @@ function showDeleteDialog(id: any) {
         </button>
 
       </div>
+
+
       <!-- table -->
       <div class="flex justify-center">
         <el-table
@@ -384,7 +380,8 @@ function showDeleteDialog(id: any) {
         <template #footer>
           <div class="dialog-footer">
             <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button :disabled="!permissionConsts.has_permission" type="primary" @click="handleDelete(currentDoodleId)">
+            <el-button :disabled="!permissionConsts.has_permission" type="primary"
+                       @click="handleDelete(currentDoodleId)">
               Confirm
             </el-button>
           </div>
