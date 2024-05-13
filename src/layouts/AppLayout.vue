@@ -91,6 +91,7 @@
 <script setup lang="ts">
 import router from '@/router'
 
+
 if (!localStorage.getItem('token')) localStorage.setItem('token', 'none')
 const token = localStorage.getItem('token')
 if (token != 'admin' && token != 'guest') router.push('/login')

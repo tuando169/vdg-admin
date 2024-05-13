@@ -29,15 +29,15 @@
 </template>
 
 <script setup lang="ts">
-import { ADMIN } from '@/globalData'
+import { ADMIN, permissionConsts } from '@/globalData'
 import router from '@/router'
 import { ref } from 'vue'
 import { ElNotification } from 'element-plus'
 const username = ref()
 const password = ref()
-
 function submit() {
   if (username.value == ADMIN.username && password.value == ADMIN.password) {
+    permissionConsts.has_permission = true
     localStorage.setItem('token', 'admin')
     router.push('/dashboard')
   } else {
@@ -50,6 +50,7 @@ function submit() {
 }
 
 function guest(){
+  permissionConsts.has_permission = false
   localStorage.setItem('token', 'guest')
   router.push('/dashboard')
 }

@@ -7,7 +7,7 @@ import type { Category, Doodle } from '@/types'
 import { Filter } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { useRoute } from 'vue-router'
-import { has_permission } from '@/globalData'
+import { permissionConsts } from '@/globalData'
 
 const route = useRoute()
 
@@ -384,7 +384,7 @@ function showDeleteDialog(id: any) {
         <template #footer>
           <div class="dialog-footer">
             <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button :disabled="!has_permission" type="primary" @click="handleDelete(currentDoodleId)">
+            <el-button :disabled="!permissionConsts.has_permission" type="primary" @click="handleDelete(currentDoodleId)">
               Confirm
             </el-button>
           </div>

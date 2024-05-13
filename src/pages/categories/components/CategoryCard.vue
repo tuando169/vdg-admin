@@ -5,7 +5,7 @@ import axios from 'axios'
 import { apiEndpoint } from '@/apiEndpoint'
 import { ElNotification } from 'element-plus'
 import router from '@/router'
-import { has_permission } from '@/globalData'
+import { permissionConsts } from '@/globalData'
 
 const props = defineProps({
   category: {
@@ -118,10 +118,10 @@ function navigateToDoodleView(categoryId: string) {
       <el-button v-show="!isEdit" type="primary" size="large" @click="isEdit=true">
         <span class="text-xl">Edit</span>
       </el-button>
-      <el-button :disabled="!has_permission" v-show="isEdit" type="primary" size="large" @click="handleEdit">
+      <el-button :disabled="!permissionConsts.has_permission" v-show="isEdit" type="primary" size="large" @click="handleEdit">
         <span class="text-xl">Update</span>
       </el-button>
-      <el-button :disabled="!has_permission" type="danger" size="large" @click="showDeleteDialog(props.category.id)">
+      <el-button :disabled="!permissionConsts.has_permission" type="danger" size="large" @click="showDeleteDialog(props.category.id)">
         <span class="text-xl">Delete</span>
       </el-button>
     </div>

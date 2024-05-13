@@ -2,8 +2,9 @@ export const ADMIN = {
   username: 'admin',
   password: 'admin',
 }
-
-export const has_permission = localStorage.getItem('token') == 'admin'
+export const permissionConsts ={
+  has_permission: false
+}
 export const eventConsts = {
   reload: 'reload'
 }
