@@ -34,7 +34,7 @@ import { ElNotification } from 'element-plus'
 const username = ref()
 const password = ref()
 
-function submitByEnter(e) {
+function submitByEnter(e: any) {
   if (e.key == 'Enter') {
     submit()
   }
