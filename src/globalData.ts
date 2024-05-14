@@ -1,6 +1,6 @@
 export const ADMIN = {
-  username: 'admin',
-  password: 'admin',
+  username: 'xuannayconkove',
+  password: 'xuannayconkove',
 }
 export const permissionConsts ={
   has_permission: false
