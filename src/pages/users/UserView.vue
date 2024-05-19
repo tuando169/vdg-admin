@@ -59,7 +59,7 @@ async function getListDoodle() {
     .then((response) => {
       const raw_data = response.data
       doodleList.value = []
-      raw_data.map((item) => {
+      raw_data.map((item:any) => {
         doodleList.value.push({
           id: item._id,
           title: item.title
