@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { apiEndpoint } from '@/apiEndpoint'
 import { computed, onBeforeMount, ref, watch } from 'vue'
-import type { Category, Doodle, User } from '@/types'
+import type { Category, User } from '@/types'
 import { Filter } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { useRoute } from 'vue-router'
@@ -57,7 +57,7 @@ async function handleDeleteStatus(id: any, deleted: boolean) {
 async function getListDoodle() {
   await axios.get(apiEndpoint.doodle.get_all)
     .then((response) => {
-      const raw_data: Doodle[] = response.data
+      const raw_data = response.data
       doodleList.value = []
       raw_data.map((item) => {
         doodleList.value.push({
@@ -85,7 +85,7 @@ async function fetchData() {
     const raw_data: User[] = response.data
 
     raw_data.forEach((item: any) => {
-      const favoriteList = item.favorite.map((favor) => {
+      const favoriteList = item.favorite.map((favor: any) => {
         const doodle = doodleList.value.find((doodle) => doodle.id == favor)
         return doodle ? { id: doodle.id, title: doodle.title } : null
       }).filter(Boolean)
