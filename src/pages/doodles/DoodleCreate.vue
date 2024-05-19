@@ -152,15 +152,6 @@ function handleImageChange(file: any) {
 }
 
 async function submit() {
-  // const regex = /^(0[1-9]|[12][0-9])\/(0[1-9]|1[0-2])$/
-  // if (!regex.test(requestData.value.anniversary)) {
-  //   ElNotification({
-  //     title: 'Error',
-  //     message: 'Invalid date format',
-  //     type: 'error'
-  //   })
-  //   return
-  // }
   const formData = new FormData()
   formData.append('title', requestData.value.title)
   formData.append('image', requestData.value.image)

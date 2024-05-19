@@ -230,7 +230,6 @@ async function getListDoodle() {
       })
       // sort listDoodle by likes
       listDoodle.value = listDoodle.value.sort((a, b) => b.likes - a.likes).slice(0, 10)
-      console.log('hot', listDoodle.value)
     }).catch((error) => {
       console.log(error)
       ElNotification({

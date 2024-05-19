@@ -17,11 +17,11 @@ const sortOptions = [
     children: [
       {
         value: 'ascending',
-        label: 'Ascending'
+        label: 'A - Z'
       },
       {
         value: 'descending',
-        label: 'Descending'
+        label: 'Z - A'
       }
     ]
   },
@@ -119,7 +119,7 @@ async function handleDelete(id: any) {
 
 async function getListCategory() {
   filterOptions.value[0].children = []
-  await axios.get('https://google-doodle-v2-v2.vercel.app/api/v1/category')
+  await axios.get(apiEndpoint.category.get_all)
     .then((response) => {
       const raw_data = response.data
       raw_data.map((item: any) => {
@@ -352,7 +352,7 @@ function showDeleteDialog(id: any) {
                     size="default"
                     class="w-[80px]"
                   >
-                    <span class="text-lg">Edit</span>
+                    <span class="text-lg">View</span>
                   </el-button>
                 </RouterLink>
                 <el-button

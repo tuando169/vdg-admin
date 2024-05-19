@@ -212,7 +212,7 @@ function handleFileChange(e: any) {
                    class="w-full p-2 bg-white rounded-lg " />
           </div>
           <div class="mb-4">
-            <label class="block font-medium mb-1">Anniversary</label>
+            <label class="block font-medium mb-1">Anniversary (dd/mm)</label>
             <input :disabled="!isEdit" type="text" v-model="data.anniversary"
                    :class="{ 'border-2 border-blue-500': isEdit }"
                    class="w-full p-2 bg-white rounded-lg " />

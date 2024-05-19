@@ -14,17 +14,20 @@ let tableData = ref([
     fullName: 'Do Trung Hieu',
     email: 'dotrunghieu@gmail.com',
     deleted: true,
-    favorite: [
-      '661a41c9d1818c2981bee5ad',
-      '661a41c9d1818c2981bee5ad'
-    ],
+    favorite: [{
+      id: '',
+      title: ''
+    }],
     doodleCreated: []
   }
 ])
 
 const dialogVisible = ref(false)
-const currentDoodleId = ref('')
-
+const currentId = ref('')
+const doodleList = ref<{
+  id: string,
+  title: string,
+}[]>([])
 fetchData()
 
 async function handleDeleteStatus(id: any, deleted: boolean) {
@@ -51,41 +54,73 @@ async function handleDeleteStatus(id: any, deleted: boolean) {
     })
 }
 
-
-async function fetchData() {
-  tableData.value = []
-  await axios.get(apiEndpoint.user.get_all)
+async function getListDoodle() {
+  await axios.get(apiEndpoint.doodle.get_all)
     .then((response) => {
-      const raw_data: User[] = response.data
-      raw_data.map((item: any) => {
-        tableData.value.push({
+      const raw_data: Doodle[] = response.data
+      doodleList.value = []
+      raw_data.map((item) => {
+        doodleList.value.push({
           id: item._id,
-          fullName: item.fullName,
-          email: item.email,
-          favorite: item.favorite,
-          deleted: item.deleted,
-          doodleCreated: item.doodleCreated || []
+          title: item.title
         })
       })
-      ElNotification({
-        title: 'Success',
-        message: 'Fetch user data successfully',
-        type: 'success'
-      })
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.log(error)
       ElNotification({
         title: 'Error',
-        message: 'Failed to fetch user data',
+        message: 'Failed to fetch doodle list',
         type: 'error'
       })
     })
 }
 
+async function fetchData() {
+  tableData.value = []
+
+  try {
+    await getListDoodle()
+    const response = await axios.get(apiEndpoint.user.get_all)
+    const raw_data: User[] = response.data
+
+    raw_data.forEach((item: any) => {
+      const favoriteList = item.favorite.map((favor) => {
+        const doodle = doodleList.value.find((doodle) => doodle.id == favor)
+        return doodle ? { id: doodle.id, title: doodle.title } : null
+      }).filter(Boolean)
+
+      tableData.value.push({
+        id: item._id,
+        fullName: item.fullName,
+        email: item.email,
+        favorite: favoriteList,
+        deleted: item.deleted,
+        doodleCreated: item.doodleCreated || []
+      })
+    })
+
+    console.log(tableData.value)
+
+    ElNotification({
+      title: 'Success',
+      message: 'Fetch user data successfully',
+      type: 'success'
+    })
+  } catch (error) {
+    console.error(error)
+    ElNotification({
+      title: 'Error',
+      message: 'Failed to fetch user data',
+      type: 'error'
+    })
+  }
+}
+
 
 function showDeleteDialog(id: any) {
   dialogVisible.value = true
-  currentDoodleId.value = id
+  currentId.value = id
 }
 
 </script>
@@ -125,10 +160,12 @@ function showDeleteDialog(id: any) {
             header-align="center"
           >
             <template #default="scope">
-              <el-tag class="mr-2 mt-2" v-for="doodle in scope.row.favorite" :key="doodle">
-                <span class="text-sm p-1">{{ doodle }}</span>
-              </el-tag>
 
+              <el-tag class="mr-2 mt-2" v-for="doodle in scope.row.favorite" :key="doodle.id">
+                <RouterLink :to="`/doodle/detail/${doodle.id}`">
+                  <span class="text-sm p-1">{{ doodle.title }}</span>
+                </RouterLink>
+              </el-tag>
             </template>
           </el-table-column>
 
@@ -175,7 +212,7 @@ function showDeleteDialog(id: any) {
         <template #footer>
           <div class="dialog-footer">
             <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="handleDeleteStatus(currentDoodleId, true)">
+            <el-button type="primary" @click="handleDeleteStatus(currentId, true)">
               Confirm
             </el-button>
           </div>
